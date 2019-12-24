@@ -62,6 +62,7 @@ def handle_message(event):
     _low_token = _token[0].lower()
     
     # query THU courses
+    for token
     if '課程' in _token[0] or '課表' in _token[0]:
         cls_list = getCls(_token[1])
         for cls in cls_list:
@@ -99,7 +100,7 @@ def find_bookls(kw):
     return ans
 
 def loadPMJson():
-    with urllib.request.urlopen("http://opendata2.epa.gov.tw/AQX.json") as url:
+    with urllib.request.urlopen("http://opendata2.epa.gov.tw/AQI.json") as url:
         data = json.loads(url.read().decode())
         for ele in data:
             pm_site[ele['SiteName']] = ele['PM2.5']
@@ -121,8 +122,7 @@ def getCls(cls_prefix):
         sub_url = 'https://course.thu.edu.tw' + cls_info.find('a')['href']
         ret_cls.append(cls_name + " " + sub_url)
         break
-#         ret_cls = ret_cls + sub_url + "\n"
-
+	
     return ret_cls
         
             
