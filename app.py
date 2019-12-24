@@ -68,10 +68,6 @@ def handle_message(event):
             _message = TextSendMessage(text=cls)	#reply course
             line_bot_api.reply_message(event.reply_token, _message)
 #            line_bot_api.push_message(event.source.user_id, TextSendMessage(text='123'))
-    elif '誠品' in _token[0] or '書單' in _token[0]:
-        bookls = find_bookls(_token[1])
-        _message = TextSendMessage(text=bookls)	#reply course
-        line_bot_api.reply_message(event.reply_token, _message)
     elif '空氣' in _token[0] or 'pm2' in _low_token:
         # query PM2.5
         for _site in pm_site:
@@ -82,24 +78,10 @@ def handle_message(event):
     elif '!h' in _token[0] or '!help' in _token[0]:
         _message = TextSendMessage(text="請輸入:課程, 誠品, 空氣 + <關鍵字>")
         line_bot_api.reply_message(event.reply_token, _message)
-	
-def find_bookls(kw):
-    with open("ESLITE.json",'r') as load_f:
-        load_dict = json.load(load_f)
-    x = load_dict['items']
-    ans = ()
-    for i in x:
-        #if i['title'] == "title":
-        if i['title'].find(str(kw))== -1:
-            pass
-#             print("")
-        else:
-            ans= (i['title']+i['link'])
-#             print (i['title'], i['link'])
-    return ans
+
 
 def loadPMJson():
-    with urllib.request.urlopen("http://opendata2.epa.gov.tw/AQX.json") as url:
+    with urllib.request.urlopen("http://opendata2.epa.gov.tw/AQI.json") as url:
         data = json.loads(url.read().decode())
         for ele in data:
             pm_site[ele['SiteName']] = ele['PM2.5']
